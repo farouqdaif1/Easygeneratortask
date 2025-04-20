@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, SignUpFormData } from "../../validation/auth";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export const SignUp = () => {
   const { signUp, isLoading, error } = useAuth();
@@ -98,6 +98,17 @@ export const SignUp = () => {
             >
               {isLoading ? "Signing up..." : "Sign up"}
             </button>
+          </div>
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link
+                to="/signin"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Sign in
+              </Link>
+            </p>
           </div>
         </form>
       </div>
