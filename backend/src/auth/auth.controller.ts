@@ -11,19 +11,22 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
+
   @ApiOperation({ summary: 'User signup' })
   @ApiResponse({ status: 201, description: 'User created' })
   @Post('signup')
   signup(@Body() body: SignupDto) {
     return this.authService.signup(body.email, body.name, body.password);
   }
+
   @ApiOperation({ summary: 'User signin' })
   @ApiResponse({ status: 200, description: 'Returns JWT tokens' })
   @Post('signin')
   signin(@Body() body: SigninDto) {
     return this.authService.signin(body.email, body.password);
   }
+
   @ApiOperation({ summary: 'Refresh token' })
   @ApiResponse({ status: 200, description: 'Returns new JWT tokens' })
   @Post('refresh')
