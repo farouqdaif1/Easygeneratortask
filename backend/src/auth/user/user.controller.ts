@@ -3,9 +3,9 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class UserController {
-    @UseGuards(AuthGuard('jwt'))
-    @Get('me')
-    getProfile(@Req() req) {
-        return req.user;
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  getProfile(@Req() req) {
+    return req.user;
+  }
 }
