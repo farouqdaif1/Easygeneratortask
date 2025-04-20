@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
@@ -8,6 +8,7 @@ interface JwtPayload {
   id: string;
   email: string;
   name: string;
+  type?: string;
 }
 
 @Injectable()
@@ -27,6 +28,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
+    // Check if this is a refresh token - reject it for normal authentication
+    if (payload.type === 'refresh') {
+      throw new UnauthorizedException(
+        'Refresh tokens cannot be used for regular authentication',
+      );
+    }
+
     const user = await this.authService.findUserById(payload.id);
     return {
       id: user._id,

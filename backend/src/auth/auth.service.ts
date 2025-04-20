@@ -49,9 +49,24 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { id: user._id, email: user.email, name: user.name };
-    const token = this.jwtService.sign(payload, { expiresIn: '1h' });
-    const refreshToken = this.jwtService.sign(payload, { expiresIn: '60d' });
+    const accessPayload = {
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      type: 'access',
+    };
+
+    const refreshPayload = {
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      type: 'refresh',
+    };
+
+    const token = this.jwtService.sign(accessPayload, { expiresIn: '1h' });
+    const refreshToken = this.jwtService.sign(refreshPayload, {
+      expiresIn: '60d',
+    });
     return { token, refreshToken };
   }
 }

@@ -13,10 +13,10 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('admin')
-    .setDescription('Admin API')
+    .setTitle('Auth API')
+    .setDescription('Auth API')
     .setVersion('1.0')
-    .addTag('admin')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
